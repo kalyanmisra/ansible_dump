@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Login to a form based webpage, then use the returned cookie to access the app in later tasks
+      uri:
+        url: https://skillprep.in/wp-login.php
+        method: POST
+        body_format: form-urlencoded
+        body:
+          name: sreeman
+          password: Welcome1
+          enter: Sign in
+        status_code: 302
+      register: login
+    - name: Connect to website using a previously stored cookie
+      uri:
+        url: https://skillprep.in/wp-admin/plugins.php
+        method: GET
+        return_content: yes
+        headers:
+          Cookie: "{{ login.set_cookie }}"

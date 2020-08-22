@@ -1,0 +1,11 @@
+---
+- hosts: jump_hosts
+  become: yes
+  tasks:
+    - name: create new users
+      user: 
+        name: "{{item}}"
+      with_items:
+        - sam
+        - bob
+        - messy

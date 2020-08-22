@@ -1,0 +1,7 @@
+---
+- hosts: jump-cs1.hyd.ftd.com
+  become: yes
+  roles:
+  - apache
+  vars: 
+    apache_server_admin: kmisra@ftdi.com

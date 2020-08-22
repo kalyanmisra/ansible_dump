@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars_files:
+    - /root/ansible/ansible/secure
+  tasks:
+  - name: Output message
+    shell: echo {{message}} > /root/ansible/ansible/deployed.txt
+  

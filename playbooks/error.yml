@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Get files
+      get_url:
+        url: 'http://{{item}}/index.html'
+        dest: '/tmp/{{item}}'
+      ignore_errors: yes
+      with_items:
+        - ftd-gcloud01.hyd.ftd.com
+        - jump-cs1.hyd.ftd.com
+         

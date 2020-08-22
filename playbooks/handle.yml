@@ -1,0 +1,24 @@
+---
+- hosts: jump_hosts
+  become: yes
+  handlers: 
+    - name: restart apache
+      service: name="httpd" state="restarted"
+      listen: "restart web"
+  tasks:
+    - name: change config
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^DocumentRoot.*$'
+        replace: 'DocumentRoot "/opt/www"'
+        backup: yes
+ 
+    - name: Copy file with owner and permissions
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{item.mode}}"
+        remote_src: yes
+      with_items:
+        - { src: '/var/www/html',dest: '/opt/www', mode: '0644'}
+      notify: "restart web"

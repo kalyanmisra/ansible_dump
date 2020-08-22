@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - name: get_file
+      block:
+        - get_url:
+            url: "http://ftd-gcloud01.hyd.ftd.com/index.html" 
+            dest: "/tmp/index_file"
+      rescue:
+        - debug: msg="The file doesn't exist"
+      always:
+        - debug: msg="Play done"

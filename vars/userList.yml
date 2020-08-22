@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  vars: 
+    userFile: /root/ansible/ansible/vars/list
+  vars_files:
+    - /root/ansible/ansible/vars/users.lst
+  tasks:
+  - name: Create file
+    file: 
+      path: "{{userFile}}"
+      state: touch
+  - name: List users
+    lineinfile:
+      path: "{{userFile}}"
+      line: "{{item}}" 
+    with_items:
+      - "{{staff}}"
+      - "{{faculty}}"
+      - "{{others}}"

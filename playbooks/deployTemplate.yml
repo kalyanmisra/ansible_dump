@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks: 
+    - name: Deploy Template
+      template:
+        src: /root/ansible/ansible/playbooks/network.j2
+        dest: /root/network.txt
+  

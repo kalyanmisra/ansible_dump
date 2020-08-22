@@ -1,0 +1,9 @@
+---
+- hosts: jump_hosts
+  become: yes
+  tasks:
+    - name: Create compressed zip file of /var/log
+      action: archive path=/var/log dest=/var/log-{{ansible_date_time.date}}.zip format=zip
+  
+    - name: Copy zip file to this localhost
+      action: fetch src=/var/log.zip dest=/root/ansible/ansible/logs-{{ inventory_hostname }}.zip flat=yes validate_checksum=yes

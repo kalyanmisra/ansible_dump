@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  vars: 
+    inv_file: /root/ansible/ansible/vars/inv.txt
+  tasks:
+  - name: Create file
+    file: 
+      path: "{{inv_file}}"
+      state: touch
+  - name: Generate inventory
+    lineinfile:
+      path: "{{inv_file}}"
+      line: "{{ groups['jump_hosts']|join(' ') }}" 
+  

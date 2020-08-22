@@ -1,0 +1,20 @@
+---
+- hosts: jump_hosts
+  become: yes
+  tasks:
+    - name: Deploy web app binary
+      copy: 
+        src: /root/hello
+        dest: /var/www/html/hello
+      tags: 
+        - webdeploy
+
+- hosts: 10.103.70.39
+  become: yes
+  tasks:
+    - name: Deploy DB script
+      copy:
+        src: /root/script.sql
+        dest: /opt/script.sql
+      tags:
+        - dbdeploy  

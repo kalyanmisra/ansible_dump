@@ -1,0 +1,22 @@
+---
+- hosts: jump_hosts
+  become: true
+  tasks:
+    - name: Ensure firewalld doesn't exist
+      action: yum list=firewalld
+
+    - name: Install Apache, elinks & firewalld
+      action: yum name="{{item}}" state=installed
+      with_items:
+        - httpd
+        - elinks
+        - firewalld
+
+    - name: start & enabled httpd
+      action: service name="{{item}}" state=started enabled=yes
+      with_items:
+        - httpd
+        - firewalld
+
+    - name: Firewall rule for enabling http port
+      action: firewalld port=80/tcp permanent=yes immediate=yes state=enabled
